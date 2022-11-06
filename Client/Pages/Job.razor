@@ -4,23 +4,72 @@
 <h3>Job</h3>
 
 <h4>Read & follow templates.</h4>
-<button class="btn btn-primary" @onclick="@AskJobType">Yes</button>
-<button class="btn btn-secondary">No</button>
+<button class="btn btn-primary" @onclick="@EnableAskJobType">Yes</button>
 <br><br>
+
 @if (jobType)
 {
     <h4>Ask job type.</h4>
-    <button class="btn btn-primary" @onclick="@AskAddress">Yes</button>
-    <button class="btn btn-secondary">No</button>
-    <br><br>
-    @if (address)
+    <button class="btn btn-primary" @onclick="@EnableAskAddress">Yes</button>
+    <br>
+    <br>
+    @if (addressTrue)
     {
         <h4>Ask address.</h4>
-        <button class="btn btn-primary" @onclick="@ValidAddressInGoogle">Yes</button>
-        <button class="btn btn-secondary">No</button>
+        <button class="btn btn-primary" @onclick="@EnableValidAddressInGoogle">Yes</button>
+        <button class="btn btn-secondary" @onclick="@SetAddressToFalse">No</button>
+        <br>
+        <br>
+        @if (validAddress)
+        {
+            <h4>Google and confirm address.</h4>
+            <button class="btn btn-primary" @onclick="@EnableAskNameAndPhoneNumber">Yes</button>
+            <br>
+            <br>
+            @if (nameAndPhone)
+            {
+                <h4>Ask name and phone number.</h4>
+                <button class="btn btn-primary" @onclick="@VerifyClickYesBtn">Yes</button>
+                <br>
+                <br>
+                @if (clickedYes)
+                {
+                    <DropDownButton OnClick="VerifyAnswer" />
+                    <br>
+                    @if (correctAnswer)
+                    {
+                        <button class="btn btn-success" @onclick="@(()=>_nav.NavigateTo("/"))">Congratulations, you have completed all modules!</button>
+                        clickedYes = false;
+                    }
+                }
+            }
+        }
+    }
+    @if (addressFalse)
+    {
+        <h4>Ask zip code.</h4>
+        <button class="btn btn-primary" @onclick="@EnableAskZipCode">Yes</button>
+        <br>
+        <br>
+        @if (zipCode)
+        {
+            <h4>Ask name and phone number.</h4>
+            <button class="btn btn-primary" @onclick="@VerifyClickYesBtn">Yes</button>
+            <br>
+            <br>
+            @if (clickedYes)
+            {
+                <DropDownButton OnClick="VerifyAnswer" />
+                <br>
+                <br>
+                @if (correctAnswer)
+                {
+                    <button class="btn btn-success" @onclick="@(()=>_nav.NavigateTo("/"))">Congratulations, you have completed all modules!</button>
+                }
+            }
+        }
     }
 }
-
 
 @*<DropDownButton OnClick="VerifyAnswer" />
     <br>
@@ -32,17 +81,23 @@
 @code
 {
     private bool correctAnswer = false;
-    private bool selectAnswer = false;
+    private bool clickedYes;
     private bool readTemplates = false;
     private bool jobType = false;
-    private bool address = false;
+    private bool addressTrue;
+    private bool addressFalse;
     private bool validAddress = false;
-    private bool zipCode = false;
-    private bool phoneNumber = false;
+    private bool zipCode;
+    private bool nameAndPhone = false;
 
     private void VerifyAnswer()
     {
         correctAnswer = true;
+    }
+
+    private void VerifyClickYesBtn()
+    {
+        clickedYes = true;
     }
 
     private void ReadandFollowTemplates()
@@ -50,28 +105,33 @@
         readTemplates = true;
     }
 
-    private void AskJobType()
+    private void EnableAskJobType()
     {
         jobType = true;
     }
 
-    private void AskAddress()
+    private void EnableAskAddress()
     {
-        address = true;
+        addressTrue = true;
     }
 
-    private void ValidAddressInGoogle()
+    private void SetAddressToFalse()
+    {
+        addressFalse = true;
+    }
+
+    private void EnableValidAddressInGoogle()
     {
         validAddress = true;
     }
 
-    private void AskZipCode()
+    private void EnableAskZipCode()
     {
         zipCode = true;
     }
 
-    private void AskPhoneNumber()
+    private void EnableAskNameAndPhoneNumber()
     {
-        phoneNumber = true;
+        nameAndPhone = true;
     }
 }

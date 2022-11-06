@@ -11,6 +11,7 @@
 
 <button class="btn btn-primary" disabled=@isCallTaskRunning @onclick="Clicked">@callButtonName</button>
 <br>
+<br>
 <span style="color:red; font-weight:700">@timerScreenValue</span>
 <br>
 
@@ -19,6 +20,7 @@
     <DropDownButton OnClick="VerifyAnswer" />
     isCallTaskRunning = true; //use this to enable the button after the button click function executed
     callButtonName = "Dont call again";
+    <br>
     <br>
     @if (correctAnswer)
     {

@@ -5,6 +5,7 @@
 
 <DropDownButton OnClick="VerifyAnswer" />
 <br>
+<br>
 @if (correctAnswer)
 {
     <button class="btn btn-success" @onclick="@(()=>_nav.NavigateTo("/spm"))">Send</button>
