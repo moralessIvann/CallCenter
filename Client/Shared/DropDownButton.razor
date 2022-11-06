@@ -1,0 +1,18 @@
+﻿<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Select Answer
+        </button>
+        <ul class="dropdown-menu">
+            <li><button class="dropdown-item" type="button" @onclick="@(() => OnClick.InvokeAsync(true))">Correct Answer</button></li>
+            <li><button class="dropdown-item" type="button">Wrong Answer</button></li>
+            <li><button class="dropdown-item" type="button">Wrong Answer</button></li>
+        </ul>
+    </div>
+</div>
+
+@code
+{
+    [Parameter] public EventCallback<bool> OnClick { get; set; }
+}

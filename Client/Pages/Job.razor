@@ -1,0 +1,77 @@
+﻿@page "/job"
+@inject NavigationManager _nav
+
+<h3>Job</h3>
+
+<h4>Read & follow templates.</h4>
+<button class="btn btn-primary" @onclick="@AskJobType">Yes</button>
+<button class="btn btn-secondary">No</button>
+<br><br>
+@if (jobType)
+{
+    <h4>Ask job type.</h4>
+    <button class="btn btn-primary" @onclick="@AskAddress">Yes</button>
+    <button class="btn btn-secondary">No</button>
+    <br><br>
+    @if (address)
+    {
+        <h4>Ask address.</h4>
+        <button class="btn btn-primary" @onclick="@ValidAddressInGoogle">Yes</button>
+        <button class="btn btn-secondary">No</button>
+    }
+}
+
+
+@*<DropDownButton OnClick="VerifyAnswer" />
+    <br>
+    @if (correctAnswer)
+    {
+    <button class="btn btn-success" @onclick="@(()=>_nav.NavigateTo("/"))">Congratulations, you have completed all modules!</button>
+    }*@
+
+@code
+{
+    private bool correctAnswer = false;
+    private bool selectAnswer = false;
+    private bool readTemplates = false;
+    private bool jobType = false;
+    private bool address = false;
+    private bool validAddress = false;
+    private bool zipCode = false;
+    private bool phoneNumber = false;
+
+    private void VerifyAnswer()
+    {
+        correctAnswer = true;
+    }
+
+    private void ReadandFollowTemplates()
+    {
+        readTemplates = true;
+    }
+
+    private void AskJobType()
+    {
+        jobType = true;
+    }
+
+    private void AskAddress()
+    {
+        address = true;
+    }
+
+    private void ValidAddressInGoogle()
+    {
+        validAddress = true;
+    }
+
+    private void AskZipCode()
+    {
+        zipCode = true;
+    }
+
+    private void AskPhoneNumber()
+    {
+        phoneNumber = true;
+    }
+}

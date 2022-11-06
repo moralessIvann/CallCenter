@@ -1,0 +1,10 @@
+﻿@inject NavigationManager _nav
+
+@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello!</h1>
+
+Welcome, click the button to begin!<br>
+<button class="btn btn-success" @onclick="@(()=>_nav.NavigateTo("/deadair"))">Continue</button>

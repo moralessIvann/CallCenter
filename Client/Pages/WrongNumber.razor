@@ -1,0 +1,22 @@
+﻿@page "/wrongnumber"
+@inject NavigationManager _nav
+
+<h3>Wrong Number</h3>
+
+<DropDownButton OnClick="VerifyAnswer" />
+<br>
+@if (correctAnswer)
+{
+    <button class="btn btn-success" @onclick="@(()=>_nav.NavigateTo("/spm"))">Send</button>
+}
+
+@code
+{
+    private bool correctAnswer = false;
+
+    private void VerifyAnswer()
+    {
+        correctAnswer = true;
+    }
+
+}

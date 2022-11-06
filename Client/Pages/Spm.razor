@@ -1,0 +1,21 @@
+﻿@page "/spm"
+@inject NavigationManager _nav
+
+<h3>Spam</h3>
+
+<DropDownButton OnClick="VerifyAnswer" />
+<br>
+@if (correctAnswer)
+{
+    <button class="btn btn-success" @onclick="@(()=>_nav.NavigateTo("/walkingstore"))">Send</button>
+}
+
+@code
+{
+    private bool correctAnswer = false;
+
+    private void VerifyAnswer()
+    {
+        correctAnswer = true;
+    }
+}

@@ -1,0 +1,90 @@
+﻿@page "/deadair"
+@using System.Timers
+@implements IDisposable
+@inject NavigationManager _nav
+
+<h3>Dead Air</h3>
+<p>
+    Call back 2 times, 20 seconds each attempt.
+</p>
+
+
+<button class="btn btn-primary" disabled=@isCallTaskRunning @onclick="Clicked">@callButtonName</button>
+<br>
+<span style="color:red; font-weight:700">@timerScreenValue</span>
+<br>
+
+@if (callBtnCounter == 2)
+{
+    <DropDownButton OnClick="VerifyAnswer" />
+    isCallTaskRunning = true; //use this to enable the button after the button click function executed
+    callButtonName = "Dont call again";
+    <br>
+    @if (correctAnswer)
+    {
+        <button class="btn btn-success" @onclick="@(()=>_nav.NavigateTo("/wrongnumber"))">Send</button>
+    }
+}
+
+@code
+{
+    private Timer timer;
+    private string? timerScreenValue;
+    private string? callButtonName = "Call Back";
+    private int callBtnCounter = 0;
+    private bool isCallTaskRunning = false;
+    private bool correctAnswer = false;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        SetTimer();
+    }
+
+    private void VerifyAnswer()
+    {
+        correctAnswer = true;
+    }
+
+    private void SetTimer()
+    {
+        timer = new Timer();
+        timer.Interval = 1000;
+        timer.Elapsed += OnTimerElapsed;
+        timer.Enabled = true;
+        timerScreenValue = DateTime.Now.ToString("hh:mm:ss tt");
+    }
+
+    private void OnTimerElapsed(object? sender, ElapsedEventArgs e)
+    {
+        timerScreenValue = DateTime.Now.ToString("hh:mm:ss tt");
+        InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+    }
+
+    public void Dispose()
+    {
+        timer.Dispose();
+    }
+
+    async void Clicked()
+    {
+        callBtnCounter++;
+        isCallTaskRunning = true;
+        callButtonName = "Wait 20 seconds and call back";
+        await OnButtonClick();
+
+        isCallTaskRunning = false; //use this to enable the button after the button click function executed
+        callButtonName = "Call Back";
+
+        StateHasChanged();
+    }
+
+    Task OnButtonClick()
+    {
+        //here user can perform buton click function
+        return Task.Delay(3000);
+    }
+}

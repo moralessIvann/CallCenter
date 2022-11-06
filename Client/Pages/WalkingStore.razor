@@ -1,0 +1,42 @@
+﻿@page "/walkingstore"
+@inject NavigationManager _nav
+
+<h3>Walking Store</h3>
+
+Select one:<br>
+
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" @onclick="OptionSelected">
+  <label class="form-check-label" for="flexRadioDefault1">
+    We have a shop but it's not open yet due to remodeling.<br>
+    We are not sure when will be open, but we are doing in-house<br>
+    appointments and we can come out to you. The technicians are<br>
+    out on the field and ready to assist.<br>
+    What type of service do you need?
+  </label>
+  <br>
+  <br>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" @onclick="OptionSelected">
+  <label class="form-check-label" for="flexRadioDefault2">
+    Store: 1365 s 22nd st, Omaha, NE 68108
+    Working hours OPEN FROM 8:00 AM - 7:00 PM
+  </label>
+
+</div>
+
+ @if (selectAnswer)
+{
+    <button class="btn btn-success" @onclick="@(()=>_nav.NavigateTo("/job"))">Send</button>
+}
+
+@code
+{
+    private bool selectAnswer = false;
+
+    private void OptionSelected()
+    {
+        selectAnswer = true;
+    }
+}
