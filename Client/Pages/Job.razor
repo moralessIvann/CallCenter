@@ -14,14 +14,17 @@
     <button class="btn btn-primary" @onclick="@EnableAskAddress">Yes</button>
     <br>
     <br>
+
     @if (addressTrue)
     {
-        <h4>Ask address.</h4>
-        <button class="btn btn-primary" @onclick="@EnableValidAddressInGoogle">Yes</button>
-        <button class="btn btn-secondary" @onclick="@SetAddressToFalse">No</button>
+
+        <h4>Ask address (select <b>NO</b> and then <b>YES</b> button scenario).</h4>
+        <button class="btn btn-primary" disabled=@disableYesBtn @onclick="@EnableValidAddressInGoogle">Yes</button>
+        <button class="btn btn-primary" disabled=@disableNoBtn @onclick="@SetAddressToFalse">No</button>
         <br>
         <br>
 
+        Console.WriteLine("addressFalse: {0}", addressFalse);
         @if (validAddress)
         {
             <h4>Google and confirm address.</h4>
@@ -29,6 +32,7 @@
             <br>
             <br>
             addressFalse = false;
+            Console.WriteLine("addressFalse: {0}", addressFalse);
             @if (nameAndPhone)
             {
                 <h4>Ask name and phone number.</h4>
@@ -69,7 +73,10 @@
                 <br>
                 @if (correctAnswer)
                 {
-                    <button class="btn btn-success" @onclick="@(()=>_nav.NavigateTo("/"))">Congratulations, you have completed all modules!</button>
+                    <button class="btn btn-dark" @onclick="@DisableBtn">Now, click this button and select <b>YES</b> scenario for Ask Address</button>
+                    nameAndPhone = false;
+                    clickedYes = false;
+                    correctAnswer = false;
                 }
             }
         }
@@ -78,6 +85,8 @@
 
 @code
 {
+    private bool disableYesBtn = true;
+    private bool disableNoBtn { get; set; }
     private bool correctAnswer = false;
     private bool clickedYes { get; set; }
     private bool readTemplates = false;
@@ -88,6 +97,12 @@
     private bool zipCode { get; set; } = false;
     private bool nameAndPhone { get; set; } = false;
     private bool IsShow { get; set; } = false;
+
+    private void DisableBtn()
+    {
+        disableYesBtn = false;
+        disableNoBtn = true;
+    }
 
     private void Show()
     {
