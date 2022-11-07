@@ -5,7 +5,8 @@
 
 <h4>Read & follow templates.</h4>
 <button class="btn btn-primary" @onclick="@EnableAskJobType">Yes</button>
-<br><br>
+<br>
+<br>
 
 @if (jobType)
 {
@@ -20,12 +21,14 @@
         <button class="btn btn-secondary" @onclick="@SetAddressToFalse">No</button>
         <br>
         <br>
+
         @if (validAddress)
         {
             <h4>Google and confirm address.</h4>
             <button class="btn btn-primary" @onclick="@EnableAskNameAndPhoneNumber">Yes</button>
             <br>
             <br>
+            addressFalse = false;
             @if (nameAndPhone)
             {
                 <h4>Ask name and phone number.</h4>
@@ -35,6 +38,7 @@
                 @if (clickedYes)
                 {
                     <DropDownButton OnClick="VerifyAnswer" />
+                    <br>
                     <br>
                     @if (correctAnswer)
                     {
@@ -47,6 +51,7 @@
     }
     @if (addressFalse)
     {
+        validAddress = false;
         <h4>Ask zip code.</h4>
         <button class="btn btn-primary" @onclick="@EnableAskZipCode">Yes</button>
         <br>
@@ -71,24 +76,23 @@
     }
 }
 
-@*<DropDownButton OnClick="VerifyAnswer" />
-    <br>
-    @if (correctAnswer)
-    {
-    <button class="btn btn-success" @onclick="@(()=>_nav.NavigateTo("/"))">Congratulations, you have completed all modules!</button>
-    }*@
-
 @code
 {
     private bool correctAnswer = false;
-    private bool clickedYes;
+    private bool clickedYes { get; set; }
     private bool readTemplates = false;
     private bool jobType = false;
-    private bool addressTrue;
-    private bool addressFalse;
-    private bool validAddress = false;
-    private bool zipCode;
-    private bool nameAndPhone = false;
+    private bool addressTrue { get; set; }
+    private bool addressFalse { get; set; }
+    private bool validAddress { get; set; } = false;
+    private bool zipCode { get; set; } = false;
+    private bool nameAndPhone { get; set; } = false;
+    private bool IsShow { get; set; } = false;
+
+    private void Show()
+    {
+        IsShow = !IsShow;
+    }
 
     private void VerifyAnswer()
     {

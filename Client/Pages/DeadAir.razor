@@ -14,7 +14,7 @@
 <br>
 <span style="color:red; font-weight:700">@timerScreenValue</span>
 <br>
-
+<br>
 @if (callBtnCounter == 2)
 {
     <DropDownButton OnClick="VerifyAnswer" />
@@ -81,12 +81,16 @@
         isCallTaskRunning = false; //use this to enable the button after the button click function executed
         callButtonName = "Call Back";
 
-        StateHasChanged();
+        //StateHasChanged();
     }
 
     Task OnButtonClick()
     {
-        //here user can perform buton click function
-        return Task.Delay(3000);
+        while (callBtnCounter != 2)
+        {
+            return Task.Delay(3000);
+        }
+
+        return Task.Delay(0);
     }
 }
