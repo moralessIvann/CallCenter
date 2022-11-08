@@ -2,28 +2,23 @@
 @inject NavigationManager _nav
 
 <h3>Job</h3>
-
 <h4>Read & follow templates.</h4>
 <button class="btn btn-primary" @onclick="@EnableAskJobType">Yes</button>
 <br>
 <br>
-
 @if (jobType)
 {
     <h4>Ask job type.</h4>
     <button class="btn btn-primary" @onclick="@EnableAskAddress">Yes</button>
     <br>
     <br>
-
     @if (addressTrue)
     {
-
         <h4>Ask address (select <b>NO</b> and then <b>YES</b> button scenario).</h4>
         <button class="btn btn-primary" disabled=@disableYesBtn @onclick="@EnableValidAddressInGoogle">Yes</button>
         <button class="btn btn-primary" disabled=@disableNoBtn @onclick="@SetAddressToFalse">No</button>
         <br>
         <br>
-
         Console.WriteLine("addressFalse: {0}", addressFalse);
         @if (validAddress)
         {
